@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>template</artifactId>
+	<packaging>pom</packaging>
+	<name>template</name>
+	<description>template</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<configuration>
+							<target>
+								<concat destfile="target/concat.txt" fixlastline="true">
+									<fileSet dir="src">
+										<include name="**/*.java" />
+									</fileSet>
+								</concat>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+					<phase>generate-sources</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includeProjectDependencies>false</includeProjectDependencies>
+					<includePluginDependencies>true</includePluginDependencies>
+					<executableDependency>
+						<groupId>codeInGameTool</groupId>
+						<artifactId>codeInGameTool</artifactId>
+					</executableDependency>
+					<mainClass>codeInGameTool.CodeInGameTool</mainClass>
+					<arguments>
+						<argument>${project.build.directory}/concat.txt</argument>
+						<argument>${project.build.directory}/CodeInGame.java</argument>
+					</arguments>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>codeInGameTool</groupId>
+						<artifactId>codeInGameTool</artifactId>
+						<version>1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+	<parent>
+		<groupId>codeInGameTool</groupId>
+		<artifactId>parent</artifactId>
+		<version>1</version>
+	</parent>
+</project>
+
