@@ -1,6 +1,9 @@
 target/**
 */target/**
 */build/**
+*/node_modules/**
+*/install/**
+package-lock.json
 **/.classpath
 **/.project
 **/.settings
